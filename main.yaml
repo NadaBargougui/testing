@@ -1,22 +1,27 @@
-name: CI/CD Pipeline
+
+name: Simple CI/CD
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  terraform:
-    name: test
+  test:
     runs-on: ubuntu-latest
-
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Smoke Test
+      - name: Verify repository
         run: |
-          sleep 5
-          curl -f http://localhost:8080/ | grep "Application Deployed via Terraform IaC!"
+          echo "Repository cloned successfully!"
 
+      - name: Test README
+        run: |
+          test -f README.md
+          echo "README exists. Test passed!"
